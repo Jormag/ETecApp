@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">ETecApp</string>
+    <string name="facebook_app_id">464364380584215</string>
+    <string name="fb_login_protocol_scheme">fb464364380584215</string>
+    <string name="email">email</string>
+    <string name="name">name</string>
+    <string name="gender">gender</string>
+    <string name="MainPage">Main Page</string>
+    <string name="Logout">Log Out</string>
+    <string name="login_canceled">Login Canceled</string>
+    <string name="login_error">Login Error</string>
+    <string name="add_button">Añadir</string>
+    <string name="update_button">Actualizar</string>
+    <string name="delete_button">borrar</string>
+    <string name="fab">Añadir Amigo</string>
+    <string name="title_activity_transition_edit">Editar Nombre Activity</string>
+    <string name="title_activity_transition_add">Añadir Nombre Activity</string>
+
+    <string-array name="names_array">
+        <item>Miguel</item>
+        <item>Juliana</item>
+        <item>Cristobal</item>
+        <item>Amy</item>
+        <item>Jason</item>
+        <item>Melissa</item>
+        <item>David</item>
+        <item>Michelle</item>
+        <item>James</item>
+    </string-array>
+
+    <integer-array name="prices_value">
+        <item>1000</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+        <item>5000</item>
+        <item>6000</item>
+        <item>7000</item>
+        <item>8000</item>
+        <item>9000</item>
+    </integer-array>
+
+    <string-array name="descriptions_array">
+        <item>hola</item>
+        <item>adios</item>
+        <item>amarillo</item>
+        <item>rojo</item>
+        <item>caro</item>
+        <item>barato</item>
+        <item>negro</item>
+        <item>grande</item>
+        <item>gigante</item>
+    </string-array>
+
+    <string-array name="locals_array">
+        <item>San Carlos</item>
+        <item>San Jose</item>
+    </string-array>
+
+
+</resources>

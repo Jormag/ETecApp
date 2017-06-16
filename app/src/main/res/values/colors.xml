@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+
+    <item name="blue" type="color">#2196f3</item>
+    <item name="orange" type="color">#ff5722</item>
+    <item name="teal" type="color">#01a9db</item>
+    <item name="gray" type="color">#2E2E2E</item>
+
+    <integer-array name="initial_colors">
+        <item>@color/teal</item>
+        <item>@color/gray</item>
+        <item>@color/orange</item>
+        <item>@color/teal</item>
+        <item>@color/gray</item>
+        <item>@color/orange</item>
+        <item>@color/teal</item>
+        <item>@color/gray</item>
+        <item>@color/orange</item>
+    </integer-array>
+
+</resources>
