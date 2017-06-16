@@ -87,10 +87,12 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
         animation.start();
     }
 
-    public void addCard(String name,String price, int color) {
+    public void addCard(String name, String price, String description, String shopArray, int color) {
         Card card = new Card();
         card.setName(name);
         card.setPrice(price);
+        card.setDescription(description);
+        card.setShopArray(shopArray);
         card.setColorResource(color);
         card.setId(getItemCount());
         cardsList.add(card);
@@ -161,6 +163,8 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
                     int requestCode = getAdapterPosition();
                     String name = cardsList.get(requestCode).getName();
                     String price = cardsList.get(requestCode).getPrice();
+                    String description = cardsList.get(requestCode).getDescription();
+                    String shopArray = cardsList.get(requestCode).getShopArray();
                     int color = cardsList.get(requestCode).getColorResource();
 
                     Log.d(DEBUG_TAG, "SampleMaterialAdapter itemView listener for Edit adapter position " + requestCode);
@@ -169,6 +173,8 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
                     Intent transitionIntent = new Intent(context, TransitionEditActivity.class);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_NAME, name);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_PRICE, price);
+                    transitionIntent.putExtra(SampleMaterialActivity.EXTRA_DESCRIPTION, description);
+                    transitionIntent.putExtra(SampleMaterialActivity.EXTRA_SHOPS, shopArray);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_COLOR, color);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_UPDATE, false);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_DELETE, false);

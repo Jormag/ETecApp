@@ -21,8 +21,9 @@ public class SampleMaterialActivity extends AppCompatActivity {
     public static final String EXTRA_UPDATE = "update";
     public static final String EXTRA_DELETE = "delete";
     public static final String EXTRA_NAME = "name";
-    public static final String EXTRA_DESCRIPTION = "description";
     public static final String EXTRA_PRICE = "price";
+    public static final String EXTRA_DESCRIPTION = "description";
+    public static final String EXTRA_SHOPS = "shopsArray";
     public static final String EXTRA_COLOR = "color";
 
     public static final String TRANSITION_FAB = "fab_transition";
@@ -36,6 +37,8 @@ public class SampleMaterialActivity extends AppCompatActivity {
     private int[] colors;
     private String[] names;
     private String[] prices;
+    private String[] descriptions;
+    private String[] shopsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class SampleMaterialActivity extends AppCompatActivity {
         names = getResources().getStringArray(R.array.names_array);
         colors = getResources().getIntArray(R.array.initial_colors);
         prices = getResources().getStringArray(R.array.prices_value);
+        descriptions = getResources().getStringArray(R.array.descriptions_array);
+        shopsArray = getResources().getStringArray(R.array.shops_Array);
 
         initCards();
 
@@ -84,8 +89,10 @@ public class SampleMaterialActivity extends AppCompatActivity {
                 // if add name, insert name in list
                 String name = data.getStringExtra(EXTRA_NAME);
                 String price = data.getStringExtra(EXTRA_PRICE);
+                String description = data.getStringExtra(EXTRA_DESCRIPTION);
+                String shopsArray = data.getStringExtra(EXTRA_SHOPS);
                 int color = data.getIntExtra(EXTRA_COLOR, 0);
-                adapter.addCard(name,price, color);
+                adapter.addCard(name,price,description,shopsArray, color);
             }
         } else {
             // Anything other than adapter.getItemCount() means editing a particular list item
@@ -120,6 +127,8 @@ public class SampleMaterialActivity extends AppCompatActivity {
             card.setId((long) i);
             card.setName(names[i]);
             card.setPrice(prices[i]);
+            card.setDescription(descriptions[i]);
+            card.setShopArray(shopsArray[i]);
             card.setColorResource(colors[i]);
             Log.d(DEBUG_TAG, "Card created with id " + card.getId() + ", name " + card.getName() + ", color " + card.getColorResource());
             cardsList.add(card);

@@ -13,10 +13,11 @@
     <string name="update_button">Actualizar</string>
     <string name="delete_button">borrar</string>
     <string name="fab">Añadir Amigo</string>
-    <string name="title_activity_transition_edit">Editar Nombre Activity</string>
-    <string name="title_activity_transition_add">Añadir Nombre Activity</string>
+    <string name="title_activity_transition_edit">Página Principal</string>
+    <string name="title_activity_transition_add">Carrito</string>
     <string name="description">Descripción:</string>
     <string name="price">Precio:</string>
+    <string name="shops">Tiendas:</string>
 
     <string-array name="names_array">
         <item>Miguel</item>
@@ -54,9 +55,16 @@
         <item>gigante</item>
     </string-array>
 
-    <string-array name="locals_array">
+    <string-array name="shops_Array">
         <item>San Carlos</item>
         <item>San Jose</item>
+        <item>Alajuela</item>
+        <item>Cartago</item>
+        <item>Quepos</item>
+        <item>Puntaleona</item>
+        <item>Puntarenas</item>
+        <item>Zarcero</item>
+        <item>Quesada</item>
     </string-array>
 
 

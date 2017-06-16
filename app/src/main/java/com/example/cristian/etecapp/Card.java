@@ -5,6 +5,8 @@ public class Card {
     private long id;
     private String name;
     private String price;
+    private String description;
+    private String shopArray;
     private int color_resource;
 
     public long getId() {
@@ -29,6 +31,22 @@ public class Card {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getShopArray() {
+        return shopArray;
+    }
+
+    public void setShopArray(String shopArray) {
+        this.shopArray = shopArray;
     }
 
     public int getColorResource() {

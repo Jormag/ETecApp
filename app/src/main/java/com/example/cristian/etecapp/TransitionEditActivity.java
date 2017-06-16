@@ -16,6 +16,7 @@ public class TransitionEditActivity extends AppCompatActivity {
     private TextView priceTextView;
     private TextView nameTextView;
     private TextView descriptionTextView;
+    private TextView shopsTextView;
     private Intent intent;
 
     @Override
@@ -26,6 +27,8 @@ public class TransitionEditActivity extends AppCompatActivity {
         priceTextView = (TextView) findViewById(R.id.price);
         nameTextView = (TextView) findViewById(R.id.name);
         descriptionTextView = (TextView) findViewById(R.id.description);
+        shopsTextView = (TextView) findViewById(R.id.shops);
+
         Button update_button = (Button) findViewById(R.id.update_button);
         Button delete_button = (Button) findViewById(R.id.delete_button);
 
@@ -33,12 +36,14 @@ public class TransitionEditActivity extends AppCompatActivity {
         String priceExtra = intent.getStringExtra(SampleMaterialActivity.EXTRA_PRICE);
         String nameExtra = intent.getStringExtra(SampleMaterialActivity.EXTRA_NAME);
         String descriptionExtra = intent.getStringExtra(SampleMaterialActivity.EXTRA_DESCRIPTION);
+        String shopsExtra = intent.getStringExtra(SampleMaterialActivity.EXTRA_SHOPS);
         int colorExtra = intent.getIntExtra(SampleMaterialActivity.EXTRA_COLOR, 0);
 
         priceTextView.setText(priceExtra);
         nameTextView.setText(nameExtra);
         nameTextView.setBackgroundColor(colorExtra);
         descriptionTextView.setText(descriptionExtra);
+        shopsTextView.setText(shopsExtra);
 
         priceTextView.addTextChangedListener(new TextWatcher() {
             @Override
