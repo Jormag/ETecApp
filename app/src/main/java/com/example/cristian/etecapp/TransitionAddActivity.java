@@ -16,8 +16,8 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class TransitionAddActivity extends AppCompatActivity {
-    private EditText nameEditText;
-    private TextView initialTextView;
+    private TextView priceTextView;
+    private TextView nameTextView;
     private int color;
     private Intent intent;
     private Random randomGenerator = new Random();
@@ -27,26 +27,26 @@ public class TransitionAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transition_add);
 
-        nameEditText = (EditText) findViewById(R.id.name);
-        initialTextView = (TextView) findViewById(R.id.initial);
+        priceTextView = (TextView) findViewById(R.id.price);
+        nameTextView = (TextView) findViewById(R.id.name);
         Button addButton = (Button) findViewById(R.id.add_button);
 
         intent = getIntent();
         int[] colors = getResources().getIntArray(R.array.initial_colors);
         color = colors[randomGenerator.nextInt(50)];
 
-        initialTextView.setText("");
-        initialTextView.setBackgroundColor(color);
+        nameTextView.setText("");
+        nameTextView.setBackgroundColor(color);
 
-        nameEditText.addTextChangedListener(new TextWatcher() {
+        priceTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count == 0) {
-                    // add initialTextView
-                    initialTextView.setText("");
+                    // add nameTextView
+                    nameTextView.setText("");
                 } else if (count == 1) {
-                    // initialTextView set to first letter of nameEditText and add name stringExtra
-                    initialTextView.setText(String.valueOf(s.charAt(0)));
+                    // nameTextView set to first letter of priceTextView and add name stringExtra
+                    nameTextView.setText(String.valueOf(s.charAt(0)));
                 }
             }
 
@@ -63,12 +63,12 @@ public class TransitionAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // must not be zero otherwise do not finish activity and report Toast message
-                String text = initialTextView.getText().toString().trim();
+                String text = nameTextView.getText().toString().trim();
                 if (TextUtils.isEmpty(text)) {
                     Toast.makeText(getApplicationContext(), "Enter a valid name", Toast.LENGTH_SHORT).show();
                 } else {
-                    intent.putExtra(SampleMaterialActivity.EXTRA_NAME, String.valueOf(nameEditText.getText()));
-                    intent.putExtra(SampleMaterialActivity.EXTRA_INITIAL, String.valueOf(nameEditText.getText().charAt(0)));
+                    intent.putExtra(SampleMaterialActivity.EXTRA_NAME, String.valueOf(priceTextView.getText()));
+                    intent.putExtra(SampleMaterialActivity.EXTRA_PRICE, String.valueOf(priceTextView.getText().charAt(0)));
                     intent.putExtra(SampleMaterialActivity.EXTRA_COLOR, color);
                     setResult(RESULT_OK, intent);
                     supportFinishAfterTransition();

@@ -17,7 +17,7 @@
     android:transitionName="layout_transition">
 
     <TextView
-        android:id="@+id/initial"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -32,13 +32,33 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/name"
+        <TextView
+            android:id="@+id/labelPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
-            android:textColor="@android:color/black"
+            android:text="@string/price" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@android:color/white"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size"
+            android:transitionName="name_transition" />
+
+        <TextView
+            android:id="@+id/labelDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/text_size"
             android:transitionName="name_transition" />
 

@@ -4,6 +4,7 @@ package com.example.cristian.etecapp;
 public class Card {
     private long id;
     private String name;
+    private String price;
     private int color_resource;
 
     public long getId() {
@@ -20,6 +21,14 @@ public class Card {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public int getColorResource() {

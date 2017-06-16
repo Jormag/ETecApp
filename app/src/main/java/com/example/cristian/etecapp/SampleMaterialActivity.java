@@ -21,8 +21,9 @@ public class SampleMaterialActivity extends AppCompatActivity {
     public static final String EXTRA_UPDATE = "update";
     public static final String EXTRA_DELETE = "delete";
     public static final String EXTRA_NAME = "name";
+    public static final String EXTRA_DESCRIPTION = "description";
+    public static final String EXTRA_PRICE = "price";
     public static final String EXTRA_COLOR = "color";
-    public static final String EXTRA_INITIAL = "initial";
 
     public static final String TRANSITION_FAB = "fab_transition";
     public static final String TRANSITION_INITIAL = "initial_transition";
@@ -34,6 +35,7 @@ public class SampleMaterialActivity extends AppCompatActivity {
     private ArrayList<Card> cardsList = new ArrayList<>();
     private int[] colors;
     private String[] names;
+    private String[] prices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class SampleMaterialActivity extends AppCompatActivity {
 
         names = getResources().getStringArray(R.array.names_array);
         colors = getResources().getIntArray(R.array.initial_colors);
+        prices = getResources().getStringArray(R.array.prices_value);
 
         initCards();
 
@@ -80,8 +83,9 @@ public class SampleMaterialActivity extends AppCompatActivity {
                 // Make sure the Add request was successful
                 // if add name, insert name in list
                 String name = data.getStringExtra(EXTRA_NAME);
+                String price = data.getStringExtra(EXTRA_PRICE);
                 int color = data.getIntExtra(EXTRA_COLOR, 0);
-                adapter.addCard(name, color);
+                adapter.addCard(name,price, color);
             }
         } else {
             // Anything other than adapter.getItemCount() means editing a particular list item
@@ -96,6 +100,9 @@ public class SampleMaterialActivity extends AppCompatActivity {
                 } else if (data.getExtras().getBoolean(EXTRA_UPDATE)) {
                     // if name changed, update user
                     String name = data.getStringExtra(EXTRA_NAME);
+
+                    //Falta en el update
+                    String price = data.getStringExtra(EXTRA_PRICE);
                     viewHolder.itemView.setVisibility(View.INVISIBLE);
                     adapter.updateCard(name, requestCode);
                 }
@@ -112,6 +119,7 @@ public class SampleMaterialActivity extends AppCompatActivity {
             Card card = new Card();
             card.setId((long) i);
             card.setName(names[i]);
+            card.setPrice(prices[i]);
             card.setColorResource(colors[i]);
             Log.d(DEBUG_TAG, "Card created with id " + card.getId() + ", name " + card.getName() + ", color " + card.getColorResource());
             cardsList.add(card);

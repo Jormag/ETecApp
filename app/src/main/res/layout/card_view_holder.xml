@@ -20,7 +20,7 @@
         android:transitionName="layout_transition">
 
         <TextView
-            android:id="@+id/initial"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -44,7 +44,7 @@
                 card_view:srcCompat="@drawable/add_to_cart" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"

@@ -33,12 +33,13 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String name = cardsList.get(position).getName();
+        String price = cardsList.get(position).getPrice();
         int color = cardsList.get(position).getColorResource();
-        TextView initial = viewHolder.initial;
         TextView nameTextView = viewHolder.name;
+        TextView priceTextView = viewHolder.price;
+        priceTextView.setText(price);
+        nameTextView.setBackgroundColor(color);
         nameTextView.setText(name);
-        initial.setBackgroundColor(color);
-        initial.setText(Character.toString(name.charAt(0)));
     }
 
     @Override
@@ -86,9 +87,10 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
         animation.start();
     }
 
-    public void addCard(String name, int color) {
+    public void addCard(String name,String price, int color) {
         Card card = new Card();
         card.setName(name);
+        card.setPrice(price);
         card.setColorResource(color);
         card.setId(getItemCount());
         cardsList.add(card);
@@ -128,14 +130,14 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView initial;
         private TextView name;
+        private TextView price;
         private ImageButton deleteButton;
 
         public ViewHolder(View v) {
             super(v);
-            initial = (TextView) v.findViewById(R.id.initial);
             name = (TextView) v.findViewById(R.id.name);
+            price = (TextView) v.findViewById(R.id.price);
             deleteButton = (ImageButton) v.findViewById(R.id.delete_button);
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -148,8 +150,8 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Pair<View, String> p1 = Pair.create((View) initial, SampleMaterialActivity.TRANSITION_INITIAL);
-                    Pair<View, String> p2 = Pair.create((View) name, SampleMaterialActivity.TRANSITION_NAME);
+                    Pair<View, String> p1 = Pair.create((View) name, SampleMaterialActivity.TRANSITION_INITIAL);
+                    Pair<View, String> p2 = Pair.create((View) price, SampleMaterialActivity.TRANSITION_NAME);
                     Pair<View, String> p3 = Pair.create((View) deleteButton, SampleMaterialActivity.TRANSITION_DELETE_BUTTON);
 
                     ActivityOptionsCompat options;
@@ -158,13 +160,15 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
 
                     int requestCode = getAdapterPosition();
                     String name = cardsList.get(requestCode).getName();
+                    String price = cardsList.get(requestCode).getPrice();
                     int color = cardsList.get(requestCode).getColorResource();
 
                     Log.d(DEBUG_TAG, "SampleMaterialAdapter itemView listener for Edit adapter position " + requestCode);
 
+                    //Este modifica lo que sale al hacer click en una card
                     Intent transitionIntent = new Intent(context, TransitionEditActivity.class);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_NAME, name);
-                    transitionIntent.putExtra(SampleMaterialActivity.EXTRA_INITIAL, Character.toString(name.charAt(0)));
+                    transitionIntent.putExtra(SampleMaterialActivity.EXTRA_PRICE, price);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_COLOR, color);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_UPDATE, false);
                     transitionIntent.putExtra(SampleMaterialActivity.EXTRA_DELETE, false);
