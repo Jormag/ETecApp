@@ -83,23 +83,35 @@
             android:textSize="@dimen/text_size"
             android:transitionName="name_transition" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:transitionName="delete_button_transition">
 
-            <Button
-                android:id="@+id/update_button"
+            <ImageButton
+                android:id="@+id/add_cart_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/update_button" />
+                android:layout_height="38dp"
+                app:srcCompat="@drawable/add_to_cart"
+                android:background="@color/white"/>
 
-            <Button
-                android:id="@+id/delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/delete_button" />
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="38dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size"
+                android:text="@string/add_cart" />
         </LinearLayout>
     </LinearLayout>
 

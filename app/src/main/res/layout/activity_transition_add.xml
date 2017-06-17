@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cristian.etecapp.TransitionAddActivity"
-    android:id="@+id/linear"
     android:background="@drawable/background"
     android:orientation="vertical"
     android:padding="@dimen/padding"
@@ -13,43 +11,36 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:transitionName="fab_transition">
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/initial_size" />
+    android:transitionName="fab_transition"
+    tools:context="com.example.cristian.etecapp.TransitionAddActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_view"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/price"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/checkOut"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:transitionName="delete_button_transition"
+            app:srcCompat="@drawable/checkout_cart" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
+            android:text="@string/checkout"
             android:textColor="@android:color/black"
-            android:background="@android:color/white"
-            android:textSize="@dimen/text_size" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_button" />
-        </LinearLayout>
+            android:textSize="@dimen/text_size"
+            android:transitionName="name_transition" />
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
 </LinearLayout>

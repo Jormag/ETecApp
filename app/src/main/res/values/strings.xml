@@ -18,6 +18,8 @@
     <string name="description">Descripción:</string>
     <string name="price">Precio:</string>
     <string name="shops">Tiendas:</string>
+    <string name="checkout">Proceder al Pago</string>
+    <string name="add_cart">Añadir al carrito</string>
 
     <string-array name="names_array">
         <item>Miguel</item>

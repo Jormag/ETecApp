@@ -3,78 +3,57 @@ package com.example.cristian.etecapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 public class TransitionAddActivity extends AppCompatActivity {
-    private TextView priceTextView;
-    private TextView nameTextView;
-    private int color;
-    private Intent intent;
-    private Random randomGenerator = new Random();
+    private static final String DEBUG_TAG = "AppCompatActivity";
+
+    private RecyclerView recyclerView;
+    private ImageButton checkOutButton;
+
+    private CartAdapter adapter;
+    private ArrayList<Card> cardsList = new ArrayList<>();
+    private int[] colors;
+    private String[] names;
+    private String[] prices;
+    private String[] descriptions;
+    private String[] shopsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transition_add);
 
-        priceTextView = (TextView) findViewById(R.id.price);
-        nameTextView = (TextView) findViewById(R.id.name);
-        Button addButton = (Button) findViewById(R.id.add_button);
+        names = getResources().getStringArray(R.array.names_array);
+        colors = getResources().getIntArray(R.array.initial_colors);
+        prices = getResources().getStringArray(R.array.prices_value);
+        descriptions = getResources().getStringArray(R.array.descriptions_array);
+        shopsArray = getResources().getStringArray(R.array.shops_Array);
 
-        intent = getIntent();
-        int[] colors = getResources().getIntArray(R.array.initial_colors);
-        color = colors[randomGenerator.nextInt(50)];
+        initCards();
 
-        nameTextView.setText("");
-        nameTextView.setBackgroundColor(color);
+        if (adapter == null) {
+            adapter = new CartAdapter(this, cardsList);
+        }
 
-        priceTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count == 0) {
-                    // add nameTextView
-                    nameTextView.setText("");
-                } else if (count == 1) {
-                    // nameTextView set to first letter of priceTextView and add name stringExtra
-                    nameTextView.setText(String.valueOf(s.charAt(0)));
-                }
-            }
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // must not be zero otherwise do not finish activity and report Toast message
-                String text = nameTextView.getText().toString().trim();
-                if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(getApplicationContext(), "Enter a valid name", Toast.LENGTH_SHORT).show();
-                } else {
-                    intent.putExtra(SampleMaterialActivity.EXTRA_NAME, String.valueOf(priceTextView.getText()));
-                    intent.putExtra(SampleMaterialActivity.EXTRA_PRICE, String.valueOf(priceTextView.getText().charAt(0)));
-                    intent.putExtra(SampleMaterialActivity.EXTRA_COLOR, color);
-                    setResult(RESULT_OK, intent);
-                    supportFinishAfterTransition();
-                }
-            }
-        });
+        checkOutButton = (ImageButton) findViewById(R.id.checkOut);
     }
 
     @Override
@@ -91,6 +70,20 @@ public class TransitionAddActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initCards() {
+        for (int i = 0; i < 9; i++) {
+            Card card = new Card();
+            card.setId((long) i);
+            card.setName(names[i]);
+            card.setPrice(prices[i]);
+            card.setDescription(descriptions[i]);
+            card.setShopArray(shopsArray[i]);
+            card.setColorResource(colors[i]);
+            Log.d(DEBUG_TAG, "Card created with id " + card.getId() + ", name " + card.getName() + ", color " + card.getColorResource());
+            cardsList.add(card);
+        }
     }
 }
 

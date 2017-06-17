@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +30,7 @@ public class TransitionEditActivity extends AppCompatActivity {
         descriptionTextView = (TextView) findViewById(R.id.description);
         shopsTextView = (TextView) findViewById(R.id.shops);
 
-        Button update_button = (Button) findViewById(R.id.update_button);
-        Button delete_button = (Button) findViewById(R.id.delete_button);
+        ImageButton add_cartButton = (ImageButton) findViewById(R.id.add_cart_button);
 
         intent = getIntent();
         String priceExtra = intent.getStringExtra(SampleMaterialActivity.EXTRA_PRICE);
@@ -45,46 +45,9 @@ public class TransitionEditActivity extends AppCompatActivity {
         descriptionTextView.setText(descriptionExtra);
         shopsTextView.setText(shopsExtra);
 
-        priceTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 0) {
-                    // update nameTextView
-                    nameTextView.setText("");
-                } else if (s.length() >= 1) {
-                    // nameTextView set to first letter of priceTextView and update name stringExtra
-                    nameTextView.setText(String.valueOf(s.charAt(0)));
-                    intent.putExtra(SampleMaterialActivity.EXTRA_UPDATE, true);
-                }
-            }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        update_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // must not be zero otherwise do not finish activity and report Toast message
-                String text = nameTextView.getText().toString().trim();
-                if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(getApplicationContext(), "Enter a valid name", Toast.LENGTH_SHORT).show();
-                } else {
-                    intent.putExtra(SampleMaterialActivity.EXTRA_UPDATE, true);
-                    intent.putExtra(SampleMaterialActivity.EXTRA_NAME, String.valueOf(priceTextView.getText()));
-                    intent.putExtra(SampleMaterialActivity.EXTRA_PRICE, String.valueOf(priceTextView.getText().charAt(0)));
-                    setResult(RESULT_OK, intent);
-                    supportFinishAfterTransition();
-                }
-            }
-        });
-
-        delete_button.setOnClickListener(new View.OnClickListener() {
+        /*//Agregar a la lista del carrito
+        add_cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent.putExtra(SampleMaterialActivity.EXTRA_DELETE, true);
@@ -92,6 +55,7 @@ public class TransitionEditActivity extends AppCompatActivity {
                 supportFinishAfterTransition();
             }
         });
+        */
     }
 
     @Override

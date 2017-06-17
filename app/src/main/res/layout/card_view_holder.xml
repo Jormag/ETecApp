@@ -32,24 +32,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:transitionName="delete_button_transition"
-                android:background="@color/white"
-                card_view:srcCompat="@drawable/add_to_cart" />
-
-            <TextView
-                android:id="@+id/price"
+            <LinearLayout
+                android:id="@+id/sampleLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size"
-                android:transitionName="name_transition" />
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/add_cart_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:background="@color/white"
+                    android:transitionName="delete_button_transition"
+                    card_view:srcCompat="@drawable/colones" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size"
+                    android:transitionName="name_transition" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="@string/delete_button"
+                android:transitionName="delete_button_transition"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -1,5 +1,4 @@
 package com.example.cristian.etecapp;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
@@ -21,13 +20,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAdapter.ViewHolder> {
-    private static final String DEBUG_TAG = "SampleMaterialAdapter";
+public class CartAdapter extends RecyclerView.Adapter< CartAdapter.ViewHolder> {
+    private static final String DEBUG_TAG = "CartAdapter";
 
     public Context context;
     public ArrayList<Card> cardsList;
 
-    public SampleMaterialAdapter(Context context, ArrayList<Card> cardsList) {
+    public  CartAdapter(Context context, ArrayList<Card> cardsList) {
         this.context = context;
         this.cardsList = cardsList;
     }
@@ -102,12 +101,6 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
         notifyItemInserted(getItemCount());
     }
 
-    public void updateCard(String name, int list_position) {
-        cardsList.get(list_position).setName(name);
-        Log.d(DEBUG_TAG, "list_position is " + list_position);
-        notifyItemChanged(list_position);
-    }
-
     public void deleteCard(View view, int list_position) {
         animateCircularDelete(view, list_position);
     }
@@ -136,22 +129,20 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private TextView price;
-        private ImageButton addCartButton;
-        private LinearLayout linearLayout;
         private Button deleteButton;
+        private LinearLayout linearLayout;
 
         public ViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.name);
             price = (TextView) v.findViewById(R.id.price);
-            addCartButton = (ImageButton) v.findViewById(R.id.add_cart_button);
-            deleteButton = (Button)v.findViewById(R.id.delete_button);
+            deleteButton = (Button) v.findViewById(R.id.delete_button);
             linearLayout = (LinearLayout)v.findViewById(R.id.sampleLayout);
 
-            linearLayout.setVisibility(View.VISIBLE);
-            deleteButton.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.VISIBLE);
 
-            addCartButton.setOnClickListener(new View.OnClickListener() {
+            deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     animateCircularDelete(itemView, getAdapterPosition());
@@ -163,7 +154,7 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
                 public void onClick(View v) {
                     Pair<View, String> p1 = Pair.create((View) name, SampleMaterialActivity.TRANSITION_INITIAL);
                     Pair<View, String> p2 = Pair.create((View) price, SampleMaterialActivity.TRANSITION_NAME);
-                    Pair<View, String> p3 = Pair.create((View) addCartButton, SampleMaterialActivity.TRANSITION_DELETE_BUTTON);
+                    Pair<View, String> p3 = Pair.create((View) deleteButton, SampleMaterialActivity.TRANSITION_DELETE_BUTTON);
 
                     ActivityOptionsCompat options;
                     Activity act = (AppCompatActivity) context;
@@ -193,5 +184,3 @@ public class SampleMaterialAdapter extends RecyclerView.Adapter<SampleMaterialAd
         }
     }
 }
-
-
