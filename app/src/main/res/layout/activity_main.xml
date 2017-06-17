@@ -121,6 +121,14 @@
             android:onClick="goMainPage"
             android:text="@string/MainPage" />
 
+        <Spinner
+            android:id="@+id/spinnerCenter"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="@color/white"
+            android:spinnerMode="dialog"
+            android:textAlignment="center" />
+
         <Button
             android:id="@+id/LogoutButton"
             android:layout_width="match_parent"

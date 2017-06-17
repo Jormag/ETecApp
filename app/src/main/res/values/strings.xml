@@ -73,5 +73,12 @@
         <item>Quesada</item>
     </string-array>
 
+    <string-array name="centers">
+        <item>Zarcero</item>
+        <item>Quesada</item>
+        <item>Perez</item>
+        <item>San Antonio</item>
+    </string-array>
+
 
 </resources>

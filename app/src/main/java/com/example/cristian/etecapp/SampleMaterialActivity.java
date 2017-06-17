@@ -1,8 +1,10 @@
 package com.example.cristian.etecapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -12,6 +14,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -33,16 +40,21 @@ public class SampleMaterialActivity extends AppCompatActivity {
     public static final String TRANSITION_DELETE_BUTTON = "delete_button_transition";
 
     public static int id = 0;
+    private int products;
 
     private RecyclerView recyclerView;
     private SampleMaterialAdapter adapter;
     private ArrayList<Card> cardsList = new ArrayList<>();
     public static ArrayList<Card> cardsSelected = new ArrayList<>();
     private int[] colors;
-    private String[] names;
-    private String[] prices;
-    private String[] descriptions;
-    private String[] shopsArray;
+
+    private String TAG = SampleMaterialActivity.class.getSimpleName();
+    private ProgressDialog pDialog;
+    private static String url = "http://192.168.0.24:9080/eTECServer/prueba/productos";
+    public ArrayList<String> names = new ArrayList<>();
+    public ArrayList<String> prices = new ArrayList<>();
+    public ArrayList<String> descriptions = new ArrayList<>();
+    public ArrayList<String> shopsArray = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +62,8 @@ public class SampleMaterialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sample_material);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        names = getResources().getStringArray(R.array.names_array);
+        new GetProducts().execute();
         colors = getResources().getIntArray(R.array.initial_colors);
-        prices = getResources().getStringArray(R.array.prices_value);
-        descriptions = getResources().getStringArray(R.array.descriptions_array);
-        shopsArray = getResources().getStringArray(R.array.shops_Array);
-
-        initCards();
 
         if (adapter == null) {
             adapter = new SampleMaterialAdapter(this, cardsList);
@@ -127,16 +134,105 @@ public class SampleMaterialActivity extends AppCompatActivity {
     }
 
     private void initCards() {
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < products; i++) {
             Card card = new Card();
             card.setId((long) i);
-            card.setName(names[i]);
-            card.setPrice(prices[i]);
-            card.setDescription(descriptions[i]);
-            card.setShopArray(shopsArray[i]);
+            card.setName(names.get(i));
+            card.setPrice(prices.get(i));
+            card.setDescription(descriptions.get(i));
+            card.setShopArray(shopsArray.get(i));
             card.setColorResource(colors[i]);
             Log.d(DEBUG_TAG, "Card created with id " + card.getId() + ", name " + card.getName() + ", color " + card.getColorResource());
             cardsList.add(card);
+        }
+    }
+
+    private class GetProducts extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(SampleMaterialActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    ArrayList nombres = new ArrayList();
+                    ArrayList precios = new ArrayList();
+                    ArrayList descripciones = new ArrayList();
+                    ArrayList locales = new ArrayList();
+
+
+                    for (int i = 0; i < jsonObj.getJSONArray("productos").length();i++){
+                        nombres.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("nombre").toString());
+                        precios.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("precio").toString());
+                        descripciones.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("descripcion").toString());
+                        locales.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("tiendas").toString());
+                    }
+
+                    SampleMaterialActivity.this.products = jsonObj.getJSONArray("productos").length();
+                    SampleMaterialActivity.this.names = nombres;
+                    SampleMaterialActivity.this.prices = precios;
+                    SampleMaterialActivity.this.descriptions = descripciones;
+                    SampleMaterialActivity.this.shopsArray = locales;
+
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            /**
+             * Updating parsed JSON data into ListView
+             * */
+
+            initCards();
         }
     }
 }

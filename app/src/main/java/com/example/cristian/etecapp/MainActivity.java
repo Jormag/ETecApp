@@ -1,12 +1,17 @@
 package com.example.cristian.etecapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -17,11 +22,24 @@ import com.facebook.login.widget.ProfilePictureView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     private TextView name;
     private TextView email;
     private TextView gender;
     public ProfilePictureView profilePictureView;
+    private boolean register = true;
+    private ArrayAdapter <String> adapter;
+    private Spinner spinner;
+    //private ArrayList<String> centers = new ArrayList<>();
+
+    private String TAG = MainActivity.class.getSimpleName();
+    private ProgressDialog pDialog;
+    private static String url = "http://192.168.0.24:9080/eTECServer/prueba/centros";
+    public ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +51,22 @@ public class MainActivity extends AppCompatActivity {
         gender = (TextView)findViewById(R.id.gender);
         email = (TextView)findViewById(R.id.email);
         profilePictureView = (ProfilePictureView) findViewById(R.id.image);
+        spinner = (Spinner) findViewById(R.id.spinnerCenter);
 
         if (AccessToken.getCurrentAccessToken() == null) {
             goFacebookLogin();
         } else {
             requestUserProfile(AccessToken.getCurrentAccessToken());
         }
+
+        if (register == false){
+            //push datos
+            register = true;
+        }else{
+
+        }
+
+        new GetProducts().execute();
     }
 
 
@@ -93,4 +121,92 @@ public class MainActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    //json
+
+    private class GetProducts extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    ArrayList arrayList = new ArrayList();
+                    for (int i = 0; i < jsonObj.getJSONArray("centros").length();i++){
+                        arrayList.add(jsonObj.getJSONArray("centros").get(i));
+                    }
+
+                    MainActivity.this.arrayList = arrayList;
+
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            /**
+             * Updating parsed JSON data into ListView
+             * */
+
+
+            adapter = new ArrayAdapter<>(
+                    MainActivity.this,
+                    android.R.layout.simple_list_item_1,
+                    arrayList);
+            spinner.setAdapter(adapter);
+
+        }
+
+    }
+
+
 }
