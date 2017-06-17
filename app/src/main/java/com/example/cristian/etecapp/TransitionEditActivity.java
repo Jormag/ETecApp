@@ -20,6 +20,7 @@ public class TransitionEditActivity extends AppCompatActivity {
     private TextView shopsTextView;
     private Intent intent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,16 @@ public class TransitionEditActivity extends AppCompatActivity {
         String shopsExtra = intent.getStringExtra(SampleMaterialActivity.EXTRA_SHOPS);
         int colorExtra = intent.getIntExtra(SampleMaterialActivity.EXTRA_COLOR, 0);
 
+        //build the card
+        final Card card = new Card();
+        card.setId((long) SampleMaterialActivity.id);
+        card.setName(nameExtra);
+        card.setPrice(priceExtra);
+        card.setDescription(descriptionExtra);
+        card.setShopArray(shopsExtra);
+        card.setColorResource(colorExtra);
+
+
         priceTextView.setText(priceExtra);
         nameTextView.setText(nameExtra);
         nameTextView.setBackgroundColor(colorExtra);
@@ -46,16 +57,16 @@ public class TransitionEditActivity extends AppCompatActivity {
         shopsTextView.setText(shopsExtra);
 
 
-        /*//Agregar a la lista del carrito
+        //Agregar a la lista del carrito
         add_cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.putExtra(SampleMaterialActivity.EXTRA_DELETE, true);
-                setResult(RESULT_OK, intent);
-                supportFinishAfterTransition();
+                SampleMaterialActivity.cardsSelected.add(card);
+                Toast.makeText(getApplicationContext(),R.string.item_added,Toast.LENGTH_SHORT).show();
+                SampleMaterialActivity.id++;
             }
         });
-        */
+
     }
 
     @Override

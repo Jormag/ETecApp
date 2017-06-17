@@ -31,9 +31,12 @@ public class SampleMaterialActivity extends AppCompatActivity {
     public static final String TRANSITION_NAME = "name_transition";
     public static final String TRANSITION_DELETE_BUTTON = "delete_button_transition";
 
+    public static int id = 0;
+
     private RecyclerView recyclerView;
     private SampleMaterialAdapter adapter;
     private ArrayList<Card> cardsList = new ArrayList<>();
+    public static ArrayList<Card> cardsSelected = new ArrayList<>();
     private int[] colors;
     private String[] names;
     private String[] prices;

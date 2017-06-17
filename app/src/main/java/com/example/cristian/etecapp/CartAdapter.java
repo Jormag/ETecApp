@@ -146,6 +146,7 @@ public class CartAdapter extends RecyclerView.Adapter< CartAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     animateCircularDelete(itemView, getAdapterPosition());
+                    SampleMaterialActivity.id--;
                 }
             });
 

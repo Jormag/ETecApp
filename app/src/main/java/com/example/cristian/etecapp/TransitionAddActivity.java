@@ -21,22 +21,26 @@ import java.util.ArrayList;
 public class TransitionAddActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "AppCompatActivity";
 
+
     private RecyclerView recyclerView;
     private ImageButton checkOutButton;
 
     private CartAdapter adapter;
-    private ArrayList<Card> cardsList = new ArrayList<>();
+    private ArrayList<Card> cardsList = SampleMaterialActivity.cardsSelected;
+    /*
     private int[] colors;
     private String[] names;
     private String[] prices;
     private String[] descriptions;
     private String[] shopsArray;
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transition_add);
 
+        /*
         names = getResources().getStringArray(R.array.names_array);
         colors = getResources().getIntArray(R.array.initial_colors);
         prices = getResources().getStringArray(R.array.prices_value);
@@ -44,9 +48,14 @@ public class TransitionAddActivity extends AppCompatActivity {
         shopsArray = getResources().getStringArray(R.array.shops_Array);
 
         initCards();
+        */
 
         if (adapter == null) {
-            adapter = new CartAdapter(this, cardsList);
+            if (cardsList.isEmpty()) {
+                adapter = new CartAdapter(this, new ArrayList<Card>() );
+            }else{
+                adapter = new CartAdapter(this, cardsList);
+            }
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -72,7 +81,7 @@ public class TransitionAddActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initCards() {
+    /*private void initCards() {
         for (int i = 0; i < 9; i++) {
             Card card = new Card();
             card.setId((long) i);
@@ -84,6 +93,6 @@ public class TransitionAddActivity extends AppCompatActivity {
             Log.d(DEBUG_TAG, "Card created with id " + card.getId() + ", name " + card.getName() + ", color " + card.getColorResource());
             cardsList.add(card);
         }
-    }
+    }*/
 }
 

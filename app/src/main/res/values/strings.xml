@@ -20,6 +20,7 @@
     <string name="shops">Tiendas:</string>
     <string name="checkout">Proceder al Pago</string>
     <string name="add_cart">Añadir al carrito</string>
+    <string name="item_added">Se agregó un objeto al carrito</string>
 
     <string-array name="names_array">
         <item>Miguel</item>
