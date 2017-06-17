@@ -22,11 +22,21 @@ import com.facebook.login.widget.ProfilePictureView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String URL_REGISTRO = "http://192.168.0.24:9080/eTECServer/clientes";
     private TextView name;
     private TextView email;
     private TextView gender;
@@ -34,12 +44,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean register = true;
     private ArrayAdapter <String> adapter;
     private Spinner spinner;
-    //private ArrayList<String> centers = new ArrayList<>();
 
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private static String url = "http://192.168.0.24:9080/eTECServer/prueba/centros";
     public ArrayList<String> arrayList;
+
+    public static final MediaType JSON= MediaType.parse("application/json; charset=utf-8");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +71,8 @@ public class MainActivity extends AppCompatActivity {
             requestUserProfile(AccessToken.getCurrentAccessToken());
         }
 
-        if (register == false){
-            //push datos
-            register = true;
-        }else{
-
-        }
-
         new GetProducts().execute();
+
     }
 
 
@@ -111,12 +117,19 @@ public class MainActivity extends AppCompatActivity {
             name.setText(jsonObject.getString("name"));
             profilePictureView.setPresetSize(ProfilePictureView.NORMAL);
             profilePictureView.setProfileId(jsonObject.getString("id"));
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     public void goMainPage(View view) {
+        try {
+            register();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Intent intent  = new Intent(this, SampleMaterialActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -206,6 +219,45 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+
+    public class Feedback extends AsyncTask<String, Void,String>{
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                OkHttpClient client = new OkHttpClient();
+
+                RequestBody body = RequestBody.create(JSON,json());
+
+                Request request = new Request.Builder()
+                        .url(URL_REGISTRO)
+                        .post(body)
+                        .build();
+                Response response =  client.newCall(request).execute();
+                String result = response.body().string();
+                return result;
+            }catch (Exception e){
+                return  null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    private String json() {
+        String x = "{\"nombre\":" +  "\""+name.getText()+"\""+ ",\"correo\": " + "\""+ email.getText()+ "\"" + ",\"ctroDistribucion\":" + "\""+spinner.getSelectedItem() +"\"" + "}";
+        return x;
+    }
+
+    private void register() throws IOException {
+        new Feedback().execute();
     }
 
 
