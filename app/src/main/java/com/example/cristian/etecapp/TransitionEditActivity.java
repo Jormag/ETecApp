@@ -9,8 +9,10 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +22,9 @@ public class TransitionEditActivity extends AppCompatActivity {
     private TextView priceTextView;
     private TextView nameTextView;
     private TextView descriptionTextView;
-    private TextView shopsTextView;
+    private Spinner shops;
     private Intent intent;
+    private ArrayAdapter<String> adapter;
 
 
     @Override
@@ -33,7 +36,7 @@ public class TransitionEditActivity extends AppCompatActivity {
         priceTextView = (TextView) findViewById(R.id.price);
         nameTextView = (TextView) findViewById(R.id.name);
         descriptionTextView = (TextView) findViewById(R.id.description);
-        shopsTextView = (TextView) findViewById(R.id.shops);
+        shops = (Spinner) findViewById(R.id.shops);
 
         ImageButton add_cartButton = (ImageButton) findViewById(R.id.add_cart_button);
 
@@ -58,7 +61,13 @@ public class TransitionEditActivity extends AppCompatActivity {
         nameTextView.setText(nameExtra);
         nameTextView.setBackgroundColor(colorExtra);
         descriptionTextView.setText(descriptionExtra);
-        shopsTextView.setText(shopsExtra.get(0));
+
+
+        adapter = new ArrayAdapter<>(
+                TransitionEditActivity.this,
+                android.R.layout.simple_list_item_1,
+                shopsExtra);
+        shops.setAdapter(adapter);
 
 
         //Agregar a la lista del carrito

@@ -74,12 +74,11 @@
             android:textSize="16sp"
             android:text="@string/shops" />
 
-        <TextView
+        <Spinner
             android:id="@+id/shops"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:background="@android:color/white"
-            android:textColor="@android:color/black"
             android:textSize="@dimen/text_size"
             android:transitionName="name_transition" />
 

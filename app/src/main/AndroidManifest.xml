@@ -52,7 +52,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SampleMaterialActivity" />
         </activity>
-        <activity android:name=".PagosActivity"></activity>
+        <activity
+            android:name=".PagosActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/pay"
+            android:parentActivityName=".SampleMaterialActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SampleMaterialActivity" />
+        </activity>
     </application>
 
 </manifest>

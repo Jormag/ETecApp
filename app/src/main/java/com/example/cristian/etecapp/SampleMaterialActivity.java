@@ -177,13 +177,14 @@ public class SampleMaterialActivity extends AppCompatActivity {
                     ArrayList precios = new ArrayList();
                     ArrayList descripciones = new ArrayList();
                     ArrayList locales = new ArrayList();
-                    ArrayList localesAux = new ArrayList();
+
 
 
                     for (int i = 0; i < jsonObj.getJSONArray("productos").length();i++){
                         nombres.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("nombre").toString());
                         precios.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("precio").toString());
                         descripciones.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("descripcion").toString());
+                        ArrayList localesAux = new ArrayList();
                         for (int j = 0; j < jsonObj.getJSONArray("productos").getJSONObject(i).getJSONArray("tiendas").length();j++){
                             localesAux.add(jsonObj.getJSONArray("productos").getJSONObject(i).getJSONArray("tiendas").getString(j));
                         }
