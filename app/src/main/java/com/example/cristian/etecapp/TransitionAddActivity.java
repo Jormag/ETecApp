@@ -1,19 +1,13 @@
 package com.example.cristian.etecapp;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;                                                                          
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,32 +17,15 @@ public class TransitionAddActivity extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
-    private ImageButton checkOutButton;
 
     private CartAdapter adapter;
     private ArrayList<Card> cardsList = SampleMaterialActivity.cardsSelected;
-    /*
-    private int[] colors;
-    private String[] names;
-    private String[] prices;
-    private String[] descriptions;
-    private String[] shopsArray;
-    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transition_add);
-
-        /*
-        names = getResources().getStringArray(R.array.names_array);
-        colors = getResources().getIntArray(R.array.initial_colors);
-        prices = getResources().getStringArray(R.array.prices_value);
-        descriptions = getResources().getStringArray(R.array.descriptions_array);
-        shopsArray = getResources().getStringArray(R.array.shops_Array);
-
-        initCards();
-        */
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         if (adapter == null) {
             if (cardsList.isEmpty()) {
@@ -62,7 +39,6 @@ public class TransitionAddActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        checkOutButton = (ImageButton) findViewById(R.id.checkOut);
     }
 
     @Override
@@ -81,18 +57,16 @@ public class TransitionAddActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*private void initCards() {
-        for (int i = 0; i < 9; i++) {
-            Card card = new Card();
-            card.setId((long) i);
-            card.setName(names[i]);
-            card.setPrice(prices[i]);
-            card.setDescription(descriptions[i]);
-            card.setShopArray(shopsArray[i]);
-            card.setColorResource(colors[i]);
-            Log.d(DEBUG_TAG, "Card created with id " + card.getId() + ", name " + card.getName() + ", color " + card.getColorResource());
-            cardsList.add(card);
+    public void goPagosActivity(View view) {
+        if (cardsList.isEmpty()){
+            Toast.makeText(getApplicationContext(),R.string.empty_list,Toast.LENGTH_SHORT).show();
         }
-    }*/
+        else {
+            Intent intent  = new Intent(this, PagosActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
+
 }
 

@@ -21,6 +21,9 @@
     <string name="checkout">Proceder al Pago</string>
     <string name="add_cart">Añadir al carrito</string>
     <string name="item_added">Se agregó un objeto al carrito</string>
+    <string name="labelPay">El monto a pagar es de:</string>
+    <string name="pay">Pagar</string>
+    <string name="empty_list">El carrito está vacio</string>
 
     <string-array name="names_array">
         <item>Miguel</item>

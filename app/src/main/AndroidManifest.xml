@@ -25,37 +25,34 @@
             </intent-filter>
         </activity>
         <activity android:name=".FacebookLogin" />
-
         <activity
             android:name=".SampleMaterialActivity"
-            android:label="@string/title_activity_transition_edit"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".MainActivity" >
+            android:label="@string/title_activity_transition_edit"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".TransitionEditActivity"
-            android:label="@string/title_activity_transition_edit"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".SampleMaterialActivity" >
+            android:label="@string/title_activity_transition_edit"
+            android:parentActivityName=".SampleMaterialActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SampleMaterialActivity" />
         </activity>
-
         <activity
             android:name=".TransitionAddActivity"
-            android:label="@string/title_activity_transition_add"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".SampleMaterialActivity" >
+            android:label="@string/title_activity_transition_add"
+            android:parentActivityName=".SampleMaterialActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SampleMaterialActivity" />
         </activity>
-
+        <activity android:name=".PagosActivity"></activity>
     </application>
 
 </manifest>

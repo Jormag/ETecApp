@@ -24,6 +24,7 @@
             android:id="@+id/checkOut"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
+            android:onClick="goPagosActivity"
             android:transitionName="delete_button_transition"
             app:srcCompat="@drawable/checkout_cart" />
 
