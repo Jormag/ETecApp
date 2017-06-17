@@ -54,7 +54,7 @@ public class SampleMaterialActivity extends AppCompatActivity {
     public ArrayList<String> names = new ArrayList<>();
     public ArrayList<String> prices = new ArrayList<>();
     public ArrayList<String> descriptions = new ArrayList<>();
-    public ArrayList<String> shopsArray = new ArrayList<>();
+    public ArrayList<ArrayList<String>> shopsArray = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +102,7 @@ public class SampleMaterialActivity extends AppCompatActivity {
                 String name = data.getStringExtra(EXTRA_NAME);
                 String price = data.getStringExtra(EXTRA_PRICE);
                 String description = data.getStringExtra(EXTRA_DESCRIPTION);
-                String shopsArray = data.getStringExtra(EXTRA_SHOPS);
+                ArrayList<String> shopsArray = data.getStringArrayListExtra(EXTRA_SHOPS);
                 int color = data.getIntExtra(EXTRA_COLOR, 0);
                 adapter.addCard(name,price,description,shopsArray, color);
             }
@@ -177,16 +177,23 @@ public class SampleMaterialActivity extends AppCompatActivity {
                     ArrayList precios = new ArrayList();
                     ArrayList descripciones = new ArrayList();
                     ArrayList locales = new ArrayList();
+                    ArrayList localesAux = new ArrayList();
 
 
                     for (int i = 0; i < jsonObj.getJSONArray("productos").length();i++){
                         nombres.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("nombre").toString());
                         precios.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("precio").toString());
                         descripciones.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("descripcion").toString());
-                        locales.add(jsonObj.getJSONArray("productos").getJSONObject(i).get("tiendas").toString());
+                        for (int j = 0; j < jsonObj.getJSONArray("productos").getJSONObject(i).getJSONArray("tiendas").length();j++){
+                            localesAux.add(jsonObj.getJSONArray("productos").getJSONObject(i).getJSONArray("tiendas").getString(j));
+                        }
+                        locales.add(localesAux);
                     }
 
                     SampleMaterialActivity.this.products = jsonObj.getJSONArray("productos").length();
+
+
+
                     SampleMaterialActivity.this.names = nombres;
                     SampleMaterialActivity.this.prices = precios;
                     SampleMaterialActivity.this.descriptions = descripciones;

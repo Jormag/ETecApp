@@ -1,12 +1,14 @@
 package com.example.cristian.etecapp;
 
 
+import java.util.ArrayList;
+
 public class Card {
     private long id;
     private String name;
     private String price;
     private String description;
-    private String shopArray;
+    private ArrayList<String> shopArray;
     private int color_resource;
 
     public long getId() {
@@ -41,11 +43,11 @@ public class Card {
         this.description = description;
     }
 
-    public String getShopArray() {
+    public ArrayList<String> getShopArray() {
         return shopArray;
     }
 
-    public void setShopArray(String shopArray) {
+    public void setShopArray(ArrayList<String> shopArray) {
         this.shopArray = shopArray;
     }
 

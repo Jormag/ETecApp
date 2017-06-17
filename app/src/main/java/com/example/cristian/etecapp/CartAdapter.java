@@ -88,7 +88,7 @@ public class CartAdapter extends RecyclerView.Adapter< CartAdapter.ViewHolder> {
         animation.start();
     }
 
-    public void addCard(String name, String price, String description, String shopArray, int color) {
+    public void addCard(String name, String price, String description, ArrayList<String> shopArray, int color) {
         Card card = new Card();
         card.setName(name);
         card.setPrice(price);
@@ -165,7 +165,7 @@ public class CartAdapter extends RecyclerView.Adapter< CartAdapter.ViewHolder> {
                     String name = cardsList.get(requestCode).getName();
                     String price = cardsList.get(requestCode).getPrice();
                     String description = cardsList.get(requestCode).getDescription();
-                    String shopArray = cardsList.get(requestCode).getShopArray();
+                    ArrayList<String> shopArray = cardsList.get(requestCode).getShopArray();
                     int color = cardsList.get(requestCode).getColorResource();
 
                     Log.d(DEBUG_TAG, "SampleMaterialAdapter itemView listener for Edit adapter position " + requestCode);
